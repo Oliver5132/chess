@@ -1,0 +1,11 @@
+class Color(object):
+    RED = (255, 0, 0)
+    GREY = (119, 136, 153)
+    CYAN = (0, 255, 255)
+    WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
+    BLUE = (0, 0, 255)
+    GREEN = (0, 255, 0)
+    YELLOW = (255, 255, 0)
+    BROWN = (165,42,42)
+    LIGHT_BLUE = (52, 31, 151)
