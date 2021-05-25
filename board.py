@@ -165,6 +165,12 @@ class Pawn(object):
                 valid_moves.append([self.row-1, self.col])
                 if self.row == 6 and board.chess_board[self.row - 2][self.col] == "--":
                     valid_moves.append([self.row - 2, self.col])
+            if board.chess_board[self.row - 1][self.col - 1][0] == 'b':
+                valid_moves.append([self.row - 1, self.col - 1])
+                print("READY TO CAPTURE")
+            if board.chess_board[self.row - 1][self.col + 1][0] == 'b':
+                valid_moves.append([self.row - 1, self.col + 1])
+
         elif self.side == "b":
             if board.chess_board[self.row + 1][self.col] == "--":
                 valid_moves.append([self.row+1, self.col])
