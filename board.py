@@ -1,23 +1,35 @@
 import pygame
 from color import Color
+from screen import Screen
 from constants import ROWS, COLS, SQUARE_SIZE
 
 class Board(object):
+    # LISTS
+    chess_board = [
+        ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        ['bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp'],
+        ['--', '--', '--', '--', '--', '--', '--', '--'],
+        ['--', '--', '--', '--', '--', '--', '--', '--'],
+        ['--', '--', '--', '--', '--', '--', '--', '--'],
+        ['--', '--', '--', '--', '--', '--', '--', '--'],
+        ['wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp'],
+        ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'] 
+    ]
     def __init__(self):
         # DICT for storing pieces with the image
         self.images = {}
 
-        # LISTS
-        self.chess_board = [
-            ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
-            ['bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp'],
-            ['--', '--', '--', '--', '--', '--', '--', '--'],
-            ['--', '--', '--', '--', '--', '--', '--', '--'],
-            ['--', '--', '--', '--', '--', '--', '--', '--'],
-            ['--', '--', '--', '--', '--', '--', '--', '--'],
-            ['wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp'],
-            ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'] 
-        ]
+        # # LISTS
+        # self.chess_board = [
+        #     ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
+        #     ['bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp'],
+        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
+        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
+        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
+        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
+        #     ['wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp'],
+        #     ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'] 
+        # ]
         self.pieces = ['wp', 'wR', 'wN','wB' ,'wK', 'wQ', 'bp', 'bB' ,'bR', 'bN', 'bK', 'bQ']
         self.white_pieces = self.pieces[0:6]
         self.black_pieces = self.pieces[6:]
@@ -64,10 +76,21 @@ class Board(object):
         self.draw_pieces(screen)
 
     def move(self, index: list, location: list):
-        piece = self.chess_board[index[0]][index[1]]
-        self.chess_board[location[0]][location[1]] = piece
-        self.chess_board[index[0]][index[1]] = "--"
-        print("move working")
+        if self.chess_board[index[0]][index[1]][1] == 'p':
+            side = self.chess_board[index[0]][index[1]][0]
+            print(side)
+            pawn = Pawn(index[0], index[1], side)
+            valid_moves = pawn.get_valid_moves()
+            for valid_move in valid_moves:
+                if valid_move == location:
+                    piece = self.chess_board[index[0]][index[1]]
+                    self.chess_board[location[0]][location[1]] = piece
+                    self.chess_board[index[0]][index[1]] = "--"
+        else:
+            piece = self.chess_board[index[0]][index[1]]
+            self.chess_board[location[0]][location[1]] = piece
+            self.chess_board[index[0]][index[1]] = "--"
+            print("move working")
 
     @staticmethod
     def get_col_row(pos):
@@ -126,3 +149,27 @@ class Board(object):
         elif self.blackTomove:
             self.whiteTomove = True
             self.blackTomove = False
+
+board = Board()
+
+class Pawn(object):
+    def __init__(self, row , col , side) -> None:
+        self.row = row
+        self.col = col
+        self.side = side
+
+    def get_valid_moves(self):
+        valid_moves = []
+        if self.side == "w":
+            if board.chess_board[self.row - 1][self.col] == "--":
+                valid_moves.append([self.row-1, self.col])
+                if self.row == 6 and board.chess_board[self.row - 2][self.col] == "--":
+                    valid_moves.append([self.row - 2, self.col])
+        elif self.side == "b":
+            if board.chess_board[self.row + 1][self.col] == "--":
+                valid_moves.append([self.row+1, self.col])
+                if self.row == 1 and board.chess_board[self.row + 2][self.col] == "--":
+                    valid_moves.append([self.row + 2,self.col])
+        
+        print(valid_moves)
+        return valid_moves
