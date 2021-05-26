@@ -10,12 +10,15 @@ board = Board()
 
 def main():
     run = True
+    draw = False
     while run:
+        board.draw_gamestate(win.screen)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 location = pygame.mouse.get_pos()
+                print(location)
                 row, col = board.get_col_row(location)
                 print(row, col)
                 if board.whiteTomove and board.chess_board[row][col] in board.black_pieces and (not board.white_piece_selected):
@@ -24,8 +27,11 @@ def main():
                     if not board.black_piece_selected:
                         print("BLACK TO BE MOVED")
                 else:
+                    pawn = Pawn(row, col, board.chess_board[row][col][0], board, False)
+                    draw = True
                     board.touch_check(row, col, Pawn)
-        board.draw_gamestate(win.screen)
+        if draw:
+            pawn.draw_valid_moves(win.screen, pawn.get_valid_moves())
         win.update()
         win.clock.tick(60)
 

@@ -19,17 +19,6 @@ class Board(object):
         # DICT for storing pieces with the image
         self.images = {}
 
-        # # LISTS
-        # self.chess_board = [
-        #     ['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
-        #     ['bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp', 'bp'],
-        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
-        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
-        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
-        #     ['--', '--', '--', '--', '--', '--', '--', '--'],
-        #     ['wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp', 'wp'],
-        #     ['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR'] 
-        # ]
         self.pieces = ['wp', 'wR', 'wN','wB' ,'wK', 'wQ', 'bp', 'bB' ,'bR', 'bN', 'bK', 'bQ']
         self.white_pieces = self.pieces[0:6]
         self.black_pieces = self.pieces[6:]
@@ -53,7 +42,7 @@ class Board(object):
 
     @staticmethod
     def draw_board(screen):
-        colors = [Color.GREY, Color.WHITE]
+        colors = [Color.GREEN, Color.WHITE]
         for row in range(ROWS):
             for col in range(COLS):
                 color = colors[((row+col)% 2)]
@@ -79,7 +68,7 @@ class Board(object):
         if self.chess_board[index[0]][index[1]][1] == 'p':
             side = self.chess_board[index[0]][index[1]][0]
             print(side)
-            pawn = Pawn(index[0], index[1], side, self)
+            pawn = Pawn(index[0], index[1], side, self, False)
             valid_moves = pawn.get_valid_moves()
             for valid_move in valid_moves:
                 if valid_move == location:
