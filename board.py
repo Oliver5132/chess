@@ -75,11 +75,11 @@ class Board(object):
         self.draw_board(screen)
         self.draw_pieces(screen)
 
-    def move(self, index: list, location: list):
+    def move(self, index: list, location: list, Pawn):
         if self.chess_board[index[0]][index[1]][1] == 'p':
             side = self.chess_board[index[0]][index[1]][0]
             print(side)
-            pawn = Pawn(index[0], index[1], side)
+            pawn = Pawn(index[0], index[1], side, self)
             valid_moves = pawn.get_valid_moves()
             for valid_move in valid_moves:
                 if valid_move == location:
@@ -100,7 +100,7 @@ class Board(object):
         return [row, col]
 
     # TO DEBUG
-    def touch_check(self, row, col):
+    def touch_check(self, row, col, Piece):
         if self.chess_board[row][col] in self.white_pieces:
             self.white_piece_selected = True
             self.white_piece = [row, col]
@@ -117,26 +117,26 @@ class Board(object):
                 self.current_square = [row, col]
         if self.whiteTomove and self.black_piece_selected and self.white_piece_selected:
             if not self.square_selected:
-                self.move(self.white_piece, self.black_piece)
+                self.move(self.white_piece, self.black_piece, Piece)
                 self.change_turn()
                 self.white_piece_selected = False
                 self.black_piece_selected = False
         elif self.blackTomove and self.white_piece_selected and self.white_piece_selected:
             if not self.square_selected:
-                self.move(self.black_piece, self.white_piece)
+                self.move(self.black_piece, self.white_piece, Piece)
                 self.change_turn()
                 self.white_piece_selected = False
                 self.black_piece_selected = False
 
         elif self.whiteTomove and self.white_piece_selected:
             if self.square_selected:
-                self.move(self.white_piece, self.current_square)
+                self.move(self.white_piece, self.current_square, Piece)
                 self.change_turn()
                 self.white_piece_selected = False
                 self.square_selected = False
         elif self.blackTomove and self.black_piece_selected:
             if self.square_selected:
-                self.move(self.black_piece, self.current_square)
+                self.move(self.black_piece, self.current_square, Piece)
                 self.change_turn()
                 self.black_piece_selected = False
                 self.black_piece_selected = False
@@ -149,33 +149,3 @@ class Board(object):
         elif self.blackTomove:
             self.whiteTomove = True
             self.blackTomove = False
-
-board = Board()
-
-class Pawn(object):
-    def __init__(self, row , col , side) -> None:
-        self.row = row
-        self.col = col
-        self.side = side
-
-    def get_valid_moves(self):
-        valid_moves = []
-        if self.side == "w":
-            if board.chess_board[self.row - 1][self.col] == "--":
-                valid_moves.append([self.row-1, self.col])
-                if self.row == 6 and board.chess_board[self.row - 2][self.col] == "--":
-                    valid_moves.append([self.row - 2, self.col])
-            if board.chess_board[self.row - 1][self.col - 1][0] == 'b':
-                valid_moves.append([self.row - 1, self.col - 1])
-                print("READY TO CAPTURE")
-            if board.chess_board[self.row - 1][self.col + 1][0] == 'b':
-                valid_moves.append([self.row - 1, self.col + 1])
-
-        elif self.side == "b":
-            if board.chess_board[self.row + 1][self.col] == "--":
-                valid_moves.append([self.row+1, self.col])
-                if self.row == 1 and board.chess_board[self.row + 2][self.col] == "--":
-                    valid_moves.append([self.row + 2,self.col])
-        
-        print(valid_moves)
-        return valid_moves

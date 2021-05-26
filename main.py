@@ -1,6 +1,7 @@
 import pygame, sys
 from board import Board
 from screen import Screen
+from pawn import Pawn
 
 pygame.init()
 
@@ -23,7 +24,7 @@ def main():
                     if not board.black_piece_selected:
                         print("BLACK TO BE MOVED")
                 else:
-                    board.touch_check(row, col)
+                    board.touch_check(row, col, Pawn)
         board.draw_gamestate(win.screen)
         win.update()
         win.clock.tick(60)
