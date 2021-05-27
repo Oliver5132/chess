@@ -2,6 +2,7 @@ import pygame, sys
 from board import Board
 from screen import Screen
 from pawn import Pawn
+from rook import Rook
 
 pygame.init()
 
@@ -27,11 +28,13 @@ def main():
                     if not board.black_piece_selected:
                         print("BLACK TO BE MOVED")
                 else:
-                    pawn = Pawn(row, col, board.chess_board[row][col][0], board, False)
+                    pawn = Pawn(row, col, board)
+                    rook = Rook(row, col, board)
                     draw = True
-                    board.touch_check(row, col, Pawn)
+                    board.touch_check(row, col, Pawn, Rook)
         if draw:
             pawn.draw_valid_moves(win.screen, pawn.get_valid_moves())
+            rook.draw_valid_moves(win.screen, rook.get_valid_moves())
         win.update()
         win.clock.tick(60)
 

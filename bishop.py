@@ -6,4 +6,4 @@ class Bishop(object):
         self.board = board
     
     def get_valid_moves(self):
-        pass
+        valid_moves = []

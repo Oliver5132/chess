@@ -1,6 +1,5 @@
 import pygame
 from color import Color
-from screen import Screen
 from constants import ROWS, COLS, SQUARE_SIZE
 
 class Board(object):
@@ -64,12 +63,19 @@ class Board(object):
         self.draw_board(screen)
         self.draw_pieces(screen)
 
-    def move(self, index: list, location: list, Pawn):
+    def move(self, index: list, location: list, Pawn, Rook):
         if self.chess_board[index[0]][index[1]][1] == 'p':
-            side = self.chess_board[index[0]][index[1]][0]
-            print(side)
-            pawn = Pawn(index[0], index[1], side, self, False)
+            pawn = Pawn(index[0], index[1], self)
             valid_moves = pawn.get_valid_moves()
+            for valid_move in valid_moves:
+                if valid_move == location:
+                    piece = self.chess_board[index[0]][index[1]]
+                    self.chess_board[location[0]][location[1]] = piece
+                    self.chess_board[index[0]][index[1]] = "--"
+        elif self.chess_board[index[0]][index[1]][1] == 'R':
+            side = self.chess_board[index[0]][index[1]][0]
+            rook = Rook(index[0], index[1], self)
+            valid_moves = rook.get_valid_moves()
             for valid_move in valid_moves:
                 if valid_move == location:
                     piece = self.chess_board[index[0]][index[1]]
@@ -89,7 +95,7 @@ class Board(object):
         return [row, col]
 
     # TO DEBUG
-    def touch_check(self, row, col, Piece):
+    def touch_check(self, row, col, Piece, Rook):
         if self.chess_board[row][col] in self.white_pieces:
             self.white_piece_selected = True
             self.white_piece = [row, col]
@@ -106,26 +112,26 @@ class Board(object):
                 self.current_square = [row, col]
         if self.whiteTomove and self.black_piece_selected and self.white_piece_selected:
             if not self.square_selected:
-                self.move(self.white_piece, self.black_piece, Piece)
+                self.move(self.white_piece, self.black_piece, Piece, Rook)
                 self.change_turn()
                 self.white_piece_selected = False
                 self.black_piece_selected = False
         elif self.blackTomove and self.white_piece_selected and self.white_piece_selected:
             if not self.square_selected:
-                self.move(self.black_piece, self.white_piece, Piece)
+                self.move(self.black_piece, self.white_piece, Piece, Rook)
                 self.change_turn()
                 self.white_piece_selected = False
                 self.black_piece_selected = False
 
         elif self.whiteTomove and self.white_piece_selected:
             if self.square_selected:
-                self.move(self.white_piece, self.current_square, Piece)
+                self.move(self.white_piece, self.current_square, Piece, Rook)
                 self.change_turn()
                 self.white_piece_selected = False
                 self.square_selected = False
         elif self.blackTomove and self.black_piece_selected:
             if self.square_selected:
-                self.move(self.black_piece, self.current_square, Piece)
+                self.move(self.black_piece, self.current_square, Piece, Rook)
                 self.change_turn()
                 self.black_piece_selected = False
                 self.black_piece_selected = False
