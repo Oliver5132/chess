@@ -1,3 +1,4 @@
+from bishop import Bishop
 import pygame, sys
 from board import Board
 from screen import Screen
@@ -30,11 +31,14 @@ def main():
                 else:
                     pawn = Pawn(row, col, board)
                     rook = Rook(row, col, board)
+                    bishop = Bishop(row, col, board)
                     draw = True
-                    board.touch_check(row, col, Pawn, Rook)
+                    board.touch_check(row, col, Pawn, Rook, Bishop)
         if draw:
             pawn.draw_valid_moves(win.screen, pawn.get_valid_moves())
             rook.draw_valid_moves(win.screen, rook.get_valid_moves())
+            bishop.draw_valid_moves(win.screen, bishop.get_valid_moves())
+
         win.update()
         win.clock.tick(60)
 
