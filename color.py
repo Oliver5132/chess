@@ -7,5 +7,5 @@ class Color(object):
     BLUE = (0, 0, 255)
     GREEN = (15,187,50)
     YELLOW = (255, 255, 0)
-    BROWN = (165,42,42)
+    BROWN = (204,136,0)
     LIGHT_BLUE = (52, 31, 151)
