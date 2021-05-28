@@ -24,7 +24,6 @@ class Pawn(object):
             if self.col - 1 >= 0:
                 if self.board.chess_board[self.row - 1][self.col - 1][0] == 'b':
                     valid_moves.append([self.row - 1, self.col - 1])
-                    print("READY TO CAPTURE")
             if self.col + 1 <= 7:
                 if self.board.chess_board[self.row - 1][self.col + 1][0] == 'b':
                     valid_moves.append([self.row - 1, self.col + 1])
@@ -37,7 +36,6 @@ class Pawn(object):
             if self.col - 1 >= 0:
                 if self.board.chess_board[self.row + 1][self.col - 1][0] == 'w':
                     valid_moves.append([self.row + 1, self.col - 1])
-                    print("READY TO CAPTURE")
             if self.col + 1 <= 7:
                 if self.board.chess_board[self.row + 1][self.col + 1][0] == 'w':
                     valid_moves.append([self.row + 1, self.col + 1])
