@@ -168,6 +168,28 @@ class Board(object):
                 self.black_piece_selected = False
                 self.square_selected = False
 
+    def white_king_check(self):
+        flag = 0
+        for row in range(ROWS):
+            for col in range(COLS):
+                if self.chess_board[row][col] == 'wK':
+                    flag = 1
+        if flag == 1:
+            return False
+        elif flag == 0:
+            return True
+    
+    def black_king_check(self):
+        flag = 0
+        for row in range(ROWS):
+            for col in range(COLS):
+                if self.chess_board[row][col] == 'bK':
+                    flag = 1
+        if flag == 1:
+            return False
+        elif flag == 0:
+            return True
+
     def change_turn(self):
         if self.whiteTomove:
             self.blackTomove = True

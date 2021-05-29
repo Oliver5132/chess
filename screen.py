@@ -11,6 +11,8 @@ class Screen(object):
 
         self.square_size = SQUARE_SIZE
 
+        self.font = pygame.font.Font('freesansbold.ttf', 64)
+
         self.clock = pygame.time.Clock()
         self.set_title()
 
@@ -24,3 +26,9 @@ class Screen(object):
     @staticmethod
     def update():
         pygame.display.flip()
+
+    def draw_win_screen(self, text):
+        text = self.font.render(text, True, Color.GREEN, Color.BLUE)
+        text_rect = text.get_rect()
+        text_rect.center = (self.screen_width // 2, self.screen_height // 2)
+        self.screen.blit(text, text_rect)

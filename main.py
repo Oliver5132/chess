@@ -1,4 +1,3 @@
-from king import King
 import pygame, sys
 from board import Board
 from screen import Screen
@@ -7,6 +6,7 @@ from rook import Rook
 from knight import Knight
 from bishop import Bishop
 from queen import Queen
+from king import King
 
 pygame.init()
 
@@ -47,6 +47,14 @@ def main():
             knight.draw_valid_moves(win.screen, knight.get_valid_moves())
             queen.draw_valid_moves(win.screen, queen.get_valid_moves())
             king.draw_valid_moves(win.screen, king.get_valid_moves())
+
+        if board.white_king_check():
+            win.draw_win_screen('BLACK WON!')
+            draw = False
+
+        elif board.black_king_check():
+            win.draw_win_screen('WHITE WON!')
+            draw = False
 
         win.update()
         win.clock.tick(60)
