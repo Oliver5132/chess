@@ -1,3 +1,4 @@
+from king import King
 import pygame, sys
 from board import Board
 from screen import Screen
@@ -36,14 +37,16 @@ def main():
                     bishop = Bishop(row, col, board)
                     knight = Knight(row, col, board)
                     queen = Queen(row, col, board)
+                    king = King(row,col, board)
                     draw = True
-                    board.touch_check(row, col, Pawn, Rook, Bishop, Knight, Queen)
+                    board.touch_check(row, col, Pawn, Rook, Bishop, Knight, Queen, King)
         if draw:
             pawn.draw_valid_moves(win.screen, pawn.get_valid_moves())
             rook.draw_valid_moves(win.screen, rook.get_valid_moves())
             bishop.draw_valid_moves(win.screen, bishop.get_valid_moves())
             knight.draw_valid_moves(win.screen, knight.get_valid_moves())
             queen.draw_valid_moves(win.screen, queen.get_valid_moves())
+            king.draw_valid_moves(win.screen, king.get_valid_moves())
 
         win.update()
         win.clock.tick(60)
